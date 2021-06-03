@@ -1,7 +1,7 @@
 
 ## JSON RPC 2.0 implementation
 
-
+### Function call
 ```
 $ curl -H 'Content-Type: application/json' -X POST -d '{"method": "add", "params": {"first": 2, "second": 2} }' http://localhost:8090/fc
 {
@@ -9,7 +9,7 @@ $ curl -H 'Content-Type: application/json' -X POST -d '{"method": "add", "params
     "result":4
 }
 ```
-
+### Function calls with wrong request schema
 ```
 # curl -H 'Content-Type: application/json' -X POST -d '{"method": "add" }' http://localhost:8090/fc
 {
@@ -31,6 +31,7 @@ $ curl -H 'Content-Type: application/json' -X POST -d '{"method": "add", "params
     }
 }
 ```
+### Benachmarks over HTTP
 
 ```
 $ ab -T 'application/json' -p add-body -n 10000 -c10 http://localhost:8090/fc
@@ -81,6 +82,8 @@ Transfer rate:          1244.03 [Kbytes/sec] received
                         1678.18 kb/s sent
                         2922.21 kb/s total
 ```
+
+### Benchmark over web socket
 
 ```
 $ (for f in `seq 1 1000`; do echo '{"method":"add","params":{"first":2,"second":2}}';done) | (time websocat ws://localhost:8090/ws) | tail -5
