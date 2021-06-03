@@ -1,0 +1,9 @@
+autom4te.cache/
+config.status
+Makefile
+*~
+pmapp
+log/
+run/
+*.log
+pmpublic
